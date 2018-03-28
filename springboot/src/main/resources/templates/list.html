@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link th:href="@{~/css/main.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="main">
+	<table class="tab">
+		<thead>
+			<tr>
+				<td>id</td>
+				<td>name</td>
+				<td>price</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="goods : ${goodList}">
+				<td th:text="${goods.id}"></td>
+				<td th:text="${goods.name}"></td>
+				<td th:text="${goods.price}"></td>
+				<td>
+					<a href="#" class="abtn">删除</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</body>
+</html>

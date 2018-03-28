@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="js/vue.js"></script>
+	<script src="js/jquery-3.2.1.js"></script>
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	
+	<div id="app" class = "main">
+		<button v-on:click="queryGoods" class="btn">加载数据</button>
+		<table class="tab2">
+			<tr>
+				<th>id</th>
+				<th>name</th>
+				<th>price</th>
+				<th>action</th>
+			</tr>
+			<tr v-for="goods in goodsList" v-on:click="onselect(goods)" v-bind:class="{'selected': goods.isSelected}">
+				<td>{{goods.id}}</td>
+				<td>{{goods.name}}</td>
+				<td>{{goods.price}}</td>
+				<td>
+					<button v-on:click="alertId(goods.id)" class="btn">显示ID</button>
+				</td>
+			</tr>
+			<!-- 
+			<table-data 
+				v-for="goods in goodsList"
+				v-bind:goods="goods"
+				v-bind:key="goods.id">
+			</table-data>
+			 -->
+		</table>
+	</div>
+	
+	<script type="text/javascript">
+		
+		Vue.component('table-data', {
+		  props: ['goods'],
+		  template: '<tr><td>{{goods.id}}</td><td>{{goods.name}}</td><td>{{goods.price}}</td></tr>'
+		})
+		
+		var app = new Vue({
+			
+			el: "#app",
+			data: {
+				goodsList: []
+			},
+			methods: {
+				
+				queryGoods: function(){
+					var that = this;
+					$.getJSON("vue/list",function(data){
+						that.goodsList = data;
+					})
+				},
+				alertId: function(data){
+					alert(data);
+				},
+				onselect: function(goods){
+					this.goodsList.forEach(item => {
+						item.isSelected = (item.id == goods.id);
+					})
+				}
+				
+			} 
+			
+		})
+	</script>
+</body>
+</html>
